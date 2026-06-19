@@ -1,0 +1,29 @@
+services:
+  # 1. Backend API (Docker Environment)
+  - type: web
+    name: et-concierge-backend
+    env: docker
+    rootDir: backend
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: MONGO_URI
+        sync: false # You will input this manually in the Render Dashboard
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OFFLINE_MODE
+        value: "false"
+
+  # 2. Frontend App (Static Site Environment)
+  - type: web
+    name: et-concierge-frontend
+    env: static
+    rootDir: et-ai-concierge
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./out
+    pullRequestPreviewsEnabled: true
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        sync: false # You will set this to https://your-backend-url.onrender.com/api in the Render Dashboard

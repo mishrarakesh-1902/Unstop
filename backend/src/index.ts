@@ -18,6 +18,9 @@ app.use(express.json());
 app.use("/api/chat", chatRoutes);
 app.use("/api/profile", profileRoutes);
 
+// Health check endpoint for CI/CD
+app.get("/api/health", (_req, res) => res.json({ status: "ok" }));
+
 // Database Connect
 const MONGO_URI = process.env.MONGO_URI;
 
