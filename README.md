@@ -51,7 +51,47 @@ ET_AI_HACKATHON/
 
 ---
 
-## 🚀 Getting Started
+## 🐳 Docker Deployment (Recommended)
+
+The project is fully dockerized for both local development and production. 
+
+### Prerequisites
+- Docker and Docker Compose installed on your machine.
+- Copy `.env.example` to `.env` in the `backend/` directory or root and configure your API keys.
+
+### Local Development (Hot Reloading)
+
+This spins up the frontend, backend, and a local MongoDB instance. Changes to the code will hot-reload automatically.
+
+```bash
+docker compose -f docker-compose.dev.yml up --build
+```
+- Frontend: `http://localhost:3000`
+- Backend: `http://localhost:8000`
+- MongoDB: `mongodb://localhost:27017`
+
+### Production Deployment
+
+This uses multi-stage builds to create highly optimized, production-ready images. The frontend is built as a static site and served via Nginx, which also reverse-proxies API requests to the backend.
+
+```bash
+docker compose up --build -d
+```
+- The app will be available at `http://localhost:3000` (mapped to Nginx port 80).
+
+**To view logs:**
+```bash
+docker compose logs -f
+```
+
+**To stop the containers:**
+```bash
+docker compose down
+```
+
+---
+
+## 🚀 Getting Started (Without Docker)
 
 ### Prerequisites
 - Node.js (v18+)
